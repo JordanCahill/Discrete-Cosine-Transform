@@ -23,6 +23,7 @@ sample = [[100, 100, 100, 100, 100, 100, 100, 100],
           [100, 100, 100, 100, 100, 100, 100, 100],
           [100, 100, 100, 100, 100, 100, 100, 100]]
 
+
 # Calculate the DCT Matrix for an M x M matrix
 def get_dct_matrix(m):
 
@@ -37,6 +38,9 @@ def get_dct_matrix(m):
     return dct_matrix
 
 
+# Takes Input Matrix A
+# DCT matrix T
+# Computes T * A * T' to calculate DCT of A
 def dct(a):
     t = get_dct_matrix(len(a))
     b = np.matmul(t, a)
