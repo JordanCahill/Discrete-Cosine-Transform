@@ -13,6 +13,7 @@ to get the DCT of M.
 import math
 import numpy as np
 
+
 # If the program is run as main, calculates DCT of this sample matrix
 sample = [[100, 100, 100, 100, 100, 100, 100, 100],
           [100, 100, 100, 100, 100, 100, 100, 100],
@@ -23,6 +24,15 @@ sample = [[100, 100, 100, 100, 100, 100, 100, 100],
           [100, 100, 100, 100, 100, 100, 100, 100],
           [100, 100, 100, 100, 100, 100, 100, 100]]
 
+sample2 = [[100, 100, 100, 100],
+           [100, 100, 100, 100],
+           [100, 100, 100, 100],
+           [100, 100, 100, 100]]
+
+
+class InvalidMatrixSizeError(Exception):
+    pass
+
 
 # Calculate the DCT Matrix for an M x M matrix
 def get_dct_matrix(m):
@@ -31,9 +41,9 @@ def get_dct_matrix(m):
 
     for p in range(m):
         for q in range(m):
-            if p == 0: # Case: First row
+            if p == 0:  # Case: First row
                 dct_matrix[p, q] = 1/math.sqrt(m)
-            else: # Every other row
+            else:  # Every other row
                 dct_matrix[p, q] = (math.sqrt(2/m))*math.cos((math.pi*((2*q)+1)*p)/(2*m))
     return dct_matrix
 
@@ -43,9 +53,12 @@ def get_dct_matrix(m):
 # Transpose of DCT Matrix  = T'
 # Computes T * A * T' to calculate DCT of A
 def dct(a):
-    t = get_dct_matrix(len(a))
-    b = np.matmul(t, a)
-    out = np.matmul(b, t.T)
+    if len(a) == len(a[0]):
+        t = get_dct_matrix(len(a))
+        b = np.matmul(t, a)
+        out = np.matmul(b, t.T)
+    else:
+        raise InvalidMatrixSizeError("Matrix must be a square matrix")
     return out
 
 
